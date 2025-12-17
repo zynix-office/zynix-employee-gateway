@@ -4,6 +4,7 @@ import { X, User, Mail, Lock, CreditCard, Check, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface RegistrationFormProps {
   isOpen: boolean;
@@ -64,13 +65,50 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    setIsSubmitting(false);
-    setStep(4);
-    
-    toast.success('Registration submitted successfully!');
+    try {
+      // Save registration to database
+      const { error } = await supabase
+        .from('employee_registrations')
+        .insert({
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: `${formData.emailPrefix}@zynix.com`,
+          password_hash: formData.password, // In production, hash this on server
+          card_last_four: formData.cardNumber.slice(-4),
+          status: 'pending'
+        });
+
+      if (error) {
+        console.error('Registration error:', error);
+        toast.error('Failed to submit registration. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      setIsSubmitting(false);
+      setStep(4);
+      toast.success('Registration submitted successfully!');
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast.error('An unexpected error occurred. Please try again.');
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleClose = () => {
+    // Reset form when closing
+    setStep(1);
+    setFormData({
+      firstName: '',
+      lastName: '',
+      emailPrefix: '',
+      password: '',
+      confirmPassword: '',
+      cardNumber: '',
+      expiryDate: '',
+      cvv: ''
+    });
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -92,7 +130,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       {/* Backdrop */}
       <motion.div 
         className="absolute inset-0 bg-background/90 backdrop-blur-md"
-        onClick={onClose}
+        onClick={handleClose}
       />
 
       {/* Form container */}
@@ -108,7 +146,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
         <div className="relative">
           {/* Close button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors"
           >
             <X className="w-4 h-4" />
@@ -348,7 +386,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
                 <p className="text-muted-foreground mb-6">
                   Your application is being reviewed. You'll receive a confirmation email at <span className="text-primary">{formData.emailPrefix}@zynix.com</span> within 24-48 hours.
                 </p>
-                <Button variant="neon" onClick={onClose}>
+                <Button variant="neon" onClick={handleClose}>
                   Return to Dashboard
                 </Button>
               </motion.div>
