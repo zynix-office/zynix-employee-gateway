@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      employee_registrations: {
+        Row: {
+          card_last_four: string | null
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          password_hash: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          card_last_four?: string | null
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          password_hash: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          card_last_four?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          password_hash?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
