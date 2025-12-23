@@ -70,9 +70,11 @@ const Team = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
-      <div className="fixed inset-0 bg-[hsl(220,25%,2%)]" />
-      <div className="fixed inset-0 diamond-pattern opacity-20 pointer-events-none" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,hsla(45,100%,60%,0.04)_0%,transparent_50%)] pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-br from-[hsl(220,30%,4%)] via-[hsl(250,25%,8%)] to-[hsl(220,25%,3%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,hsla(45,100%,60%,0.08)_0%,transparent_50%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsla(270,60%,40%,0.06)_0%,transparent_50%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,hsla(35,100%,50%,0.03)_0%,transparent_40%)]" />
+      <div className="fixed inset-0 diamond-pattern opacity-15 pointer-events-none" />
 
       {/* Navigation */}
       <motion.nav 
