@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Orbitron', 'sans-serif'],
+        display: ['Cinzel', 'Playfair Display', 'serif'],
+        tech: ['Orbitron', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
       },
       colors: {
@@ -51,10 +52,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        neon: {
-          DEFAULT: "hsl(var(--neon-glow))",
-          cyan: "hsl(var(--neon-cyan))",
+        gold: {
+          DEFAULT: "hsl(var(--gold-glow))",
+          light: "hsl(var(--gold-light))",
+          dark: "hsl(var(--gold-dark))",
         },
+        platinum: "hsl(var(--platinum))",
+        royal: "hsl(var(--royal-purple))",
+        emerald: "hsl(var(--emerald))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,15 +79,31 @@ export default {
           "0%": { "offset-distance": "0%" },
           "100%": { "offset-distance": "100%" },
         },
+        "slide-in-right": {
+          "0%": { transform: "translateX(100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        "fade-up": {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "border-beam": "border-beam 4s linear infinite",
+        "slide-in-right": "slide-in-right 0.5s ease-out",
+        "fade-up": "fade-up 0.6s ease-out",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-neon': 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--neon-cyan)) 100%)',
+        'gradient-gold': 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)',
+        'gradient-royal': 'linear-gradient(135deg, hsla(var(--primary) / 0.1) 0%, hsla(var(--royal-purple) / 0.05) 100%)',
+      },
+      boxShadow: {
+        'gold': '0 0 30px hsla(45, 100%, 60%, 0.2)',
+        'gold-lg': '0 0 60px hsla(45, 100%, 60%, 0.3)',
+        'elegant': '0 25px 50px -12px hsla(0, 0%, 0%, 0.5)',
       },
     },
   },
